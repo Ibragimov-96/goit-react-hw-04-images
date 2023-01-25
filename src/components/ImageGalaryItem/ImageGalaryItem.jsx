@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Modal } from '../Modal/Modal';
-import PropTypes from 'prop-types'
+import PropTypes from 'prop-types';
 // import LiStyle from './ImageGalaryStyle.js'
 
 class GalaryItem extends Component {
@@ -33,7 +33,6 @@ class GalaryItem extends Component {
 }
 
 export default GalaryItem;
-GalaryItem.propTypes={
-  key:PropTypes.string,
-  img:PropTypes.object,
-}
+GalaryItem.propTypes = {
+  img: PropTypes.object,
+};

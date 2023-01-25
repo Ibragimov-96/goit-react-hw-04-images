@@ -5,15 +5,17 @@ import Searchbar from './Searchbar/SearchBar';
 import Galary from './Galary/Galary';
 import Button from './Button/Button';
 import { Loader } from './Loader/Loder';
+import { toast } from 'react-toastify';
 
 import 'react-toastify/dist/ReactToastify.css';
 export class App extends Component {
   state = {
     imgName: null,
-error:null,
+    error: null,
     images: [],
     page: 1,
     isLoading: false,
+    btnLoader: true,
   };
   loadeMore = () => {
     this.setState(prevState => {
@@ -26,21 +28,27 @@ error:null,
     const KEY = `32393059-516ce92bb65b938d93c48f3a1`;
     const API = `https://pixabay.com/api/?q=${nextName}&page=${this.state.page}&key=${KEY}&image_type=photo&orientation=horizontal&per_page=12`;
     if (prevName !== nextName || this.state.page !== prevState.page) {
-      this.setState({ isLoading: true });
+      this.setState({ isLoading: true, btnLoader: true });
       fetch(API)
         .then(responce => {
           if (responce.ok) {
             return responce.json();
           }
-          return Promise.reject(
-            new Error(`Нет таких картинок ${nextName}`)
-          )
+
+          return Promise.reject(new Error(`Нет таких картинок ${nextName}`));
         })
-        .then(img =>
+        .then(img => {
+          if (!img.hits.length) {
+            toast('Такой картинки нет');
+          }
+          if (img.hits.length < 12) {
+            this.setState({ btnLoader: false });
+          }
           this.setState(prevState => ({
             images: [...prevState.images, ...img.hits],
-          }))
-        ).catch(error=> this.setState({error}))
+          }));
+        })
+        .catch(error => this.setState({ error }))
         .finally(() => this.setState({ isLoading: false }));
     }
   }
@@ -55,7 +63,9 @@ error:null,
           {this.state.isLoading && <Loader />}
 
           <Galary images={this.state.images} />
-          {this.state.imgName && <Button loadMore={this.loadeMore}/>}
+          {this.state.images.length > 0 && this.state.btnLoader && (
+            <Button loadMore={this.loadeMore} />
+          )}
         </Components>
         <ToastContainer position="top-right" autoClose={2000} />
       </>
