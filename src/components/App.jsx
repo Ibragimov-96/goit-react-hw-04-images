@@ -18,7 +18,8 @@ export const App =()=> {
   //   btnLoader: true,
   // };
   const [imgName, setImgName]=useState('')
-  const [errors, setError]=useState(null)
+  // eslint-disable-next-line no-unused-vars
+  const [error, setError]=useState(null)
   const [images, setImages]=useState([])
   const [page, setPage]=useState(1)
   const [isLoading, setIsLoading]=useState(false)
@@ -63,7 +64,7 @@ export const App =()=> {
         setIsLoading(false)
         
        );
-  },[imgName,page])
+  },[API, imgName, page])
 
   // componentDidUpdate (prevProps, prevState) {
   //   const prevName = prevState.imgName;
