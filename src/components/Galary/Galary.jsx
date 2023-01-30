@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import ImageGalaryItem from '../ImageGalaryItem/ImageGalaryItem';
 
 const Gallery = ({ images }) => {
+  
   return (
     <ul className="ImageGallery">
       {images.map(img => (

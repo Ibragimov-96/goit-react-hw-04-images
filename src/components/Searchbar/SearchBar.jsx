@@ -1,41 +1,39 @@
-import React, { Component } from 'react';
+import React, { useState  } from 'react';
 import { toast } from 'react-toastify';
 import PropTypes from 'prop-types';
-class Searchbar extends Component {
-  state = {
-    name: '',
+const Searchbar =({onSubmit}) =>{
+ 
+  const [name, setName]= useState('')
+  const handleImg = e => {
+    setName(e.currentTarget.value.toLowerCase())
+    // this.setState({ name: e.currentTarget.value.toLowerCase() });
   };
-  handleImg = e => {
-    this.setState({ name: e.currentTarget.value.toLowerCase() });
-  };
-  handleSubmit = e => {
+  
+ const handleSubmit = e => {
     e.preventDefault();
-    if (this.state.name.trim() === '') {
+    if (name.trim() === '') {
       toast('Ведите имя картинки');
       return;
     }
-    this.props.onSubmit(this.state.name);
-    this.setState({ name: '' });
+   onSubmit(name);
+    setName('')
   };
-  render() {
-    return (
-      <header className="Searchbar">
-        <form onSubmit={this.handleSubmit} className="SearchForm">
-          <button className="SearchForm-button" type="submit">
-            <span>Search</span>
-          </button>
+  return (
+    <header className="Searchbar">
+      <form onSubmit={handleSubmit} className="SearchForm">
+        <button className="SearchForm-button" type="submit">
+          <span>Search</span>
+        </button>
 
-          <input
-            onChange={this.handleImg}
-            className="SearchForm-input"
-            type="text"
-            placeholder="Search images and photos"
-          />
-        </form>
-      </header>
-    );
-  }
-
+        <input
+          onChange={handleImg}
+          className="SearchForm-input"
+          type="text"
+          placeholder="Search images and photos"
+        />
+      </form>
+    </header>
+  );
   //
 }
 

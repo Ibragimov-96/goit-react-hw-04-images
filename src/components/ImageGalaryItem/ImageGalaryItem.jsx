@@ -1,35 +1,34 @@
-import React, { Component } from 'react';
+import React, { useState  } from 'react';
 import { Modal } from '../Modal/Modal';
 import PropTypes from 'prop-types';
 // import LiStyle from './ImageGalaryStyle.js'
 
-class GalaryItem extends Component {
-  state = {
-    isOpen: false,
-  };
-
+const GalaryItem =({img})=> {
+  // state = {
+  //   isOpen: false,
+  // };
+const [isOpen, setIsOpen]=useState(false)
   // window.removeEventListener('keydown',)
-  onClick = () => {
-    this.setState(prevState => ({ isOpen: !prevState.isOpen }));
+ const onClick = () => {
+  setIsOpen(prevState=>!prevState)
+    // this.setState(prevState => ({ isOpen: !prevState.isOpen }));
   };
-  render() {
-    const image = this.props.img;
+ 
 
-    return (
-      <>
-        <li
-          key={image.id}
-          onClick={this.onClick}
-          className="ImageGalleryItem-image"
-        >
-          <img src={image.webformatURL} alt={image.tags} />
-        </li>
-        {this.state.isOpen && (
-          <Modal isOpen={this.onClick} largeImageURL={image.largeImageURL} />
-        )}
-      </>
-    );
-  }
+  return (
+    <>
+      <li
+        key={img.id}
+        onClick={onClick}
+        className="ImageGalleryItem-image"
+      >
+        <img src={img.webformatURL} alt={img.tags} />
+      </li>
+      {isOpen && (
+        <Modal isOpen={onClick} largeImageURL={img.largeImageURL} />
+      )}
+    </>
+  );
 }
 
 export default GalaryItem;
